@@ -72,7 +72,7 @@ let router = new express.Router();
       paid_date: data.paid_date
 
     };
-    return res.json(["invoice": invoice ])
+    return res.json({"invoice": invoice })
    }
    catch (err) {
     return next(err);
