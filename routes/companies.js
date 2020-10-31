@@ -126,7 +126,7 @@ router.put("/:code", async function (req, res, next) {
      let code = req.params.code;
      
      const result = await db.query(
-      `SELECT FROM companies
+      `DELETE FROM companies
        WHERE code=$1
        RETURNING code`, [code]);
        if (result.rows.length == 0) {

@@ -39,6 +39,7 @@ describe("GET /1", function () {
             id: 1,
             amt: 100,
             add_date: '2018-01-01T08:00:00.000Z',
+            // add_date: "2017-12-31T23:00:00.000Z",
             paid: false,
             paid_date: null,
             company: {

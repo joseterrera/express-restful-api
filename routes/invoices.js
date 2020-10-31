@@ -88,7 +88,7 @@ let router = new express.Router();
     try {
       let {comp_code, amt } = req.body;
       const result = await db.query(
-        `SELECT INTO invoices (comp_code, amt)
+        `INSERT INTO invoices (comp_code, amt)
          VALUES ($1, $2)
          RETURNING id, comp_code, amt, paid, add_date, paid_date`, [comp_code, amt]);
 
@@ -134,7 +134,7 @@ let router = new express.Router();
         `UPDATE invoices
          SET amt=$1, paid=$2, paid_date=$3
          WHERE id=$4
-         RETURNING id, comp_code, amt_paid, add_date, paid_date`, [amt, paid, paidDate, id]);
+         RETURNING id, comp_code, amt, paid, add_date, paid_date`, [amt, paid, paidDate, id]);
       
       return res.json({"invoice": result.rows[0]});
      }
