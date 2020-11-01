@@ -7,10 +7,18 @@ const { createData } = require("../_test-common");
 const db = require("../db");
 
 // before each test, clean out data
-beforeEach(createData);
+beforeEach(async () => {
+  await createData()
+});
 
 afterAll(async () => {
   await db.end()
+})
+
+describe('bar',() => {
+  test('foo', () => {
+    expect(true).toBe(true)
+  })
 })
 
 describe("GET /", function () {
@@ -54,6 +62,7 @@ describe("GET /apple", function () {
 describe("POST /", function () {
 
   test("It should add company", async function () {
+    await createData()
     const response = await request(app)
         .post("/companies")
         .send({name: "TacoTime", description: "Yum!"});
@@ -67,6 +76,7 @@ describe("POST /", function () {
           }
         }
     );
+    await createData()
   });
 
   test("It should return 500 for conflict", async function () {

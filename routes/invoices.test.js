@@ -7,7 +7,9 @@ const { createData } = require("../_test-common");
 const db = require("../db");
 
 // before each test, clean out data
-beforeEach(createData);
+beforeEach(async () => {
+  await createData()
+});
 
 afterAll(async () => {
   await db.end()
@@ -16,6 +18,7 @@ afterAll(async () => {
 describe("GET /", function () {
 
   test("It should respond with array of invoices", async function () {
+    await createData()
     const response = await request(app).get("/invoices");
     expect(response.body).toEqual({
       "invoices": [
@@ -53,7 +56,7 @@ describe("GET /1", function () {
   });
 
   test("It should return 404 for no-such-invoice", async function () {
-    const response = await request(app).get("/invoices/999");
+    const response = await ( request(app).get("/invoices/999") )
     expect(response.status).toEqual(404);
   })
 });
@@ -62,6 +65,8 @@ describe("GET /1", function () {
 describe("POST /", function () {
 
   test("It should add invoice", async function () {
+    await createData()
+
     const response = await request(app)
         .post("/invoices")
         .send({amt: 400, comp_code: 'ibm'});
@@ -78,7 +83,10 @@ describe("POST /", function () {
           }
         }
     );
+    await createData()
+
   });
+
 });
 
 
